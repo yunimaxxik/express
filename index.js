@@ -1,25 +1,7 @@
 const express = require('express');
-const { v4: uuid } = require('uuid');
+const indexRouter = require('./routes/index');
 
-class Book {
-  constructor(
-    title,
-    description,
-    authors,
-    favorite,
-    fileCover,
-    fileName,
-    id = uuid()
-  ) {
-    this.id = id;
-    this.title = title;
-    this.description = description;
-    this.authors = authors;
-    this.favorite = favorite;
-    this.fileCover = fileCover;
-    this.fileName = fileName;
-  }
-}
+app.use('/', indexRouter);
 
 const stor = {
   books: []
@@ -51,15 +33,23 @@ app.get('/api/books/:id', (req, res) => {
 
 app.post('/api/books', (req, res) => {
   const { books } = stor;
-  const { title, description, authors, favorite, fileCover, fileName } =
-    req.body;
+  const {
+    title,
+    description,
+    authors,
+    favorite,
+    fileCover,
+    fileName,
+    fileBook
+  } = req.body;
   const newBook = new Book(
     title,
     description,
     authors,
     favorite,
     fileCover,
-    fileName
+    fileName,
+    fileBook
   );
   books.push(newBook);
   res.status(201).json(newBook);
@@ -68,8 +58,15 @@ app.post('/api/books', (req, res) => {
 app.put('/api/books/:id', (req, res) => {
   const { books } = stor;
   const { id } = req.params;
-  const { title, description, authors, favorite, fileCover, fileName } =
-    req.body;
+  const {
+    title,
+    description,
+    authors,
+    favorite,
+    fileCover,
+    fileName,
+    fileBook
+  } = req.body;
   const idx = books.findIndex((el) => el.id === id);
 
   if (idx !== -1) {
@@ -80,7 +77,8 @@ app.put('/api/books/:id', (req, res) => {
       authors,
       favorite,
       fileCover,
-      fileName
+      fileName,
+      fileBook
     };
 
     res.json(books[idx]);

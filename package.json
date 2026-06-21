@@ -21,6 +21,7 @@
   "homepage": "https://github.com/yunimaxxik/express#readme",
   "dependencies": {
     "express": "^5.2.1",
+    "multer": "^2.2.0",
     "uuid": "^14.0.0"
   }
 }
