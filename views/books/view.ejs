@@ -1,0 +1,29 @@
+<%- include('../port/header') %>
+
+<div class="card shadow-sm">
+  <div class="card-header bg-primary text-white">
+    <h1 class="h3 mb-0"><%= book.title %></h1>
+  </div>
+  <div class="card-body">
+    <% if (book.favorite) { %>
+      <p><span class="badge bg-warning text-dark">⭐ Избранное</span></p>
+    <% } %>
+    <p><strong>Описание:</strong> <%= book.description || '—' %></p>
+    <p><strong>Авторы:</strong> <%= book.authors || '—' %></p>
+    <p><strong>Обложка:</strong> <%= book.fileCover || '—' %></p>
+    <p><strong>Имя файла:</strong> <%= book.fileName || '—' %></p>
+    <% if (book.fileBook) { %>
+      <p>
+        <a href="/books/<%= book.id %>/download" class="btn btn-success">
+          📥 Скачать книгу
+        </a>
+      </p>
+    <% } %>
+  </div>
+  <div class="card-footer bg-transparent d-flex gap-2">
+    <a href="/books" class="btn btn-secondary">⬅ Назад</a>
+    <a href="/books/<%= book.id %>/edit" class="btn btn-primary">✏️ Редактировать</a>
+  </div>
+</div>
+
+<%- include('../port/footer') %>

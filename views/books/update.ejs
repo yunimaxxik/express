@@ -1,0 +1,46 @@
+<%- include('../port/header') %>
+
+<div class="card shadow-sm">
+  <div class="card-header bg-warning text-dark">
+    <h1 class="h4 mb-0">✏️ Редактирование: <%= book.title %></h1>
+  </div>
+  <div class="card-body">
+    <form action="/books/<%= book.id %>" method="post" enctype="multipart/form-data">
+      <div class="mb-3">
+        <label for="title" class="form-label">Название *</label>
+        <input type="text" class="form-control" id="title" name="title" value="<%= book.title %>" required>
+      </div>
+      <div class="mb-3">
+        <label for="description" class="form-label">Описание</label>
+        <textarea class="form-control" id="description" name="description" rows="3"><%= book.description %></textarea>
+      </div>
+      <div class="mb-3">
+        <label for="authors" class="form-label">Авторы</label>
+        <input type="text" class="form-control" id="authors" name="authors" value="<%= book.authors %>">
+      </div>
+      <div class="mb-3 form-check">
+        <input type="checkbox" class="form-check-input" id="favorite" name="favorite" value="true" <%= book.favorite ? 'checked' : '' %>>
+        <label class="form-check-label" for="favorite">Избранное</label>
+      </div>
+      <div class="mb-3">
+        <label for="fileCover" class="form-label">Обложка (имя файла)</label>
+        <input type="text" class="form-control" id="fileCover" name="fileCover" value="<%= book.fileCover %>">
+      </div>
+      <div class="mb-3">
+        <label for="fileName" class="form-label">Отображаемое имя файла</label>
+        <input type="text" class="form-control" id="fileName" name="fileName" value="<%= book.fileName %>">
+      </div>
+      <div class="mb-3">
+        <label for="fileBook" class="form-label">Файл книги (PDF/EPUB)</label>
+        <input class="form-control" type="file" id="fileBook" name="fileBook" accept=".pdf,.epub">
+        <% if (book.fileBook) { %>
+          <small class="text-muted">Текущий файл: <strong><%= book.fileBook %></strong> (<a href="/books/<%= book.id %>/download">скачать</a>)</small>
+        <% } %>
+      </div>
+      <button type="submit" class="btn btn-primary">💾 Сохранить</button>
+      <a href="/books" class="btn btn-secondary">Отмена</a>
+    </form>
+  </div>
+</div>
+
+<%- include('../port/footer') %>

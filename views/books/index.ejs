@@ -1,0 +1,42 @@
+<%- include('../port/header') %>
+<h1 class="mb-4">📖 Список книг</h1>
+
+<% if (books.length) { %>
+  <div class="row row-cols-1 row-cols-md-2 g-4">
+    <% books.forEach(book => { %>
+      <div class="col">
+        <div class="card book-card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">
+              <a href="/books/<%= book.id %>" class="text-decoration-none text-dark">
+                <%= book.title %>
+              </a>
+              <% if (book.favorite) { %>
+                <span class="favorite-star">⭐</span>
+              <% } %>
+            </h5>
+            <p class="card-text text-truncate" style="max-width: 200px;">
+              <%= book.description || 'Нет описания' %>
+            </p>
+            <p class="card-text"><small class="text-muted">Авторы: <%= book.authors || '—' %></small></p>
+          </div>
+          <div class="card-footer bg-transparent d-flex justify-content-between align-items-center">
+            <a href="/books/<%= book.id %>" class="btn btn-sm btn-outline-primary">Подробнее</a>
+            <div>
+              <a href="/books/<%= book.id %>/edit" class="btn btn-sm btn-outline-secondary me-1">✏️</a>
+              <form action="/books/<%= book.id %>/delete" method="post" class="d-inline" onsubmit="return confirm('Удалить книгу?')">
+                <button type="submit" class="btn btn-sm btn-outline-danger">🗑</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% }) %>
+  </div>
+<% } else { %>
+  <div class="alert alert-info" role="alert">
+    Книг пока нет. <a href="/books/new" class="alert-link">Добавить первую</a>
+  </div>
+<% } %>
+
+<%- include('../port/footer') %>

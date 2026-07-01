@@ -1,16 +1,23 @@
 const express = require('express');
-const indexRouter = require('./routes/index');
+const path = require('path');
 const booksRouter = require('./routes/books');
 const userRouter = require('./routes/user');
+const uiRouter = require('./routes/ui');
 const error404 = require('./middleware/err-404');
 
 const app = express();
 
-app.use(express.json());
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 
-app.use('/', indexRouter);
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'public')));
+
 app.use('/api/books', booksRouter);
 app.use('/api/user', userRouter);
+
+app.use('/', uiRouter);
 
 app.use(error404);
 
